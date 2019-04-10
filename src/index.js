@@ -3,11 +3,11 @@ const http = require('http')
 const express = require('express')
 const socketio = require('socket.io')
 const Filter = require('bad-words')
+const moment = require('moment')
 const { generateMessage , generateLocationMessage } = require('./utilis/messages')
 const {getUser, addUser , removeUser , getUsersInRoom} = require('./utilis/users')
 // const color = require('./utilis/random-color')
 // const chalk = require('chalk')
-
 
 const app = express()
 const server = http.createServer(app)         //allow us to create a new web-server
@@ -32,7 +32,8 @@ io.on('connection', (socket) => {
         const {error,user} = addUser({
             id:socket.id,
             username,          //we get back an object with either error or user property
-            room
+            room,
+            createdAt : moment(new Date().getTime()).format("hh:mm a"),
         })
         if(error){
             return callback(error)   //to return the function if none of the function runs
@@ -42,6 +43,9 @@ io.on('connection', (socket) => {
         //allows us to join a given chat room and we pass to the name of the room we're trying to join.
         socket.emit('message', generateMessage('Admin',(`Welcome ${user.username}`)))    //to emit to that particular connection
         socket.broadcast.to(user.room).emit('message', generateMessage('Admin',`${user.username} has joined!`))      //to emit it to all except tht particular connection
+        //change
+
+        // socket.broadcast.to(user.room).emit('notices',generateMessage('Admin',`${user.username} has joined!`))
         io.to(user.room).emit('roomData', {
             room:user.room,
             users:getUsersInRoom(user.room)
@@ -69,10 +73,12 @@ io.on('connection', (socket) => {
 
         if(user){
             io.to(user.room).emit('message',generateMessage('Admin',`${user.username} has left the chat!`))
+            // io.to(user.room).emit('notices',generateMessage('Admin',`${user.username} has left the chat!`))
             io.to(user.room).emit('roomData',{
                 room: user.room,
-                users: user.getUsersInRoom
+                users: getUsersInRoom(user.room)
             })
+
         }
         
     })

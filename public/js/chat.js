@@ -8,16 +8,17 @@ const socket = io()   // call I O to connect to these server right
 const $messageForm = document.querySelector('#message-form')
 const $messageFormButton = document.querySelector('button')
 const $messageFormInput = document.querySelector('input')
-const $sendLocationButton = document.querySelector('#send-location')
+const $sendLocationButton = document.querySelector('#location-nav')
 const $messages = document.querySelector('#messages')
-
 //templates
 
 const messageTemplate = document.querySelector('#message-template').innerHTML
 const locationMessageTemplate = document.querySelector('#location-message-template').innerHTML
 const sidebarTemplate = document.querySelector('#sidebar-template').innerHTML
+
 //options
 //destructing object too
+
 const {username,room} = Qs.parse(location.search,{ignoreQueryPrefix: true})  //for removing question mark
 
 const autoScroll = () => {
@@ -46,12 +47,20 @@ const autoScroll = () => {
     }
 }
 
+// socket.on('notices',(message) => {
+//     const html = Mustache.render(notificationTemplate,{
+//         message:message.text,
+//         createdAt:moment(message.createdAt).format("hh:mm:ss a")
+//     })
+//     document.querySelector('#noticeList').innerHTML = html
+// })
+
 socket.on('message',(message) => {  //this message in arg is actually an object getting value in messages.js
     //to render msg
     const html = Mustache.render(messageTemplate,{   //script id is messagetemplate 
         username:message.username,
         message: message.text ,//to send it to index.html in div space
-        createdAt:moment(message.createdAt).format("h:m:ss a")
+        createdAt:moment(message.createdAt).format("hh:mm:ss a")
     })
     $messages.insertAdjacentHTML('beforeend',html)
     autoScroll()
@@ -62,7 +71,7 @@ socket.on('locationMessage',(message) => {
     const link = Mustache.render(locationMessageTemplate,{
         username:message.username,
         url:message.url,
-        createdAt: moment(message.createdAt).format("h:m:ss a")
+        createdAt: moment(message.createdAt).format("hh:mm:ss a")
     })
     $messages.insertAdjacentHTML('beforeend',link)
     autoScroll()
@@ -71,15 +80,19 @@ socket.on('locationMessage',(message) => {
 socket.on('roomData',({room,users}) => {
     const html = Mustache.render(sidebarTemplate,{
         room,
-        users
+        users  //array of user
     })
+    console.log(users)
     document.querySelector('#sidebar').innerHTML = html
+    autoScroll()
 })
 
 $messageForm.addEventListener('submit',(e) => {
     e.preventDefault()
     //disable
     $messageFormButton.setAttribute('disabled','disabled')
+    //msg is the name we applied om chat.html
+    //const msg = document.querySelector('input').value   otherwise if bottom not
 
     const msg = e.target.elements.msg.value   //we dont have id for input, e is event
 
@@ -91,7 +104,6 @@ $messageForm.addEventListener('submit',(e) => {
         if(error){
             return console.log(error)
         }
-
         console.log('Message deliverd!')
     })
 })
@@ -115,9 +127,38 @@ $sendLocationButton.addEventListener('click',() => {
     })
 })
 
-socket.emit('join',{username,room},(error)=>{
+socket.emit('join',{
+    username,
+    room
+    // sno:order()
+},(error)=>{
     if(error){
         alert(error)
         location.href = '/'
     }  
 })
+
+var li = document.getElementsByClassName('li_tool');
+function hov(){
+    // console.log($(this)[0].li[1])
+    for(var i=0;i<$(this)[0].li.length;i++){
+        var x = $(this)[0].li[i].title
+
+        if(!(x.includes("Joined"))){
+            $(this)[0].li[i].setAttribute("title","Joined at "+x)
+            }    
+        }
+    }
+    
+
+
+
+$("#option").click(function(){
+    if($('#navbar_ul').css("display")==="none"){
+        $('#navbar_ul').css("display","block")
+    }else{
+        $('#navbar_ul').css("display","none")
+    }
+  });
+
+  

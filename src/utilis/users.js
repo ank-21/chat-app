@@ -22,7 +22,7 @@ const removeUser = (id) => {
  }
  
 
-const addUser = ({id , username , room}) =>{
+const addUser = ({id , username , room, createdAt}) =>{
     username = username.trim().toLowerCase()
     room = room.trim().toLowerCase()
 
@@ -48,7 +48,7 @@ const addUser = ({id , username , room}) =>{
     }
 
     //store user
-    const user = {id,username,room}   //es6 feature
+    const user = {id,username,room,createdAt}   //es6 feature
     users.push(user)
     return {user}
 
