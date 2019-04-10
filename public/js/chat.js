@@ -2,7 +2,8 @@ const socket = io()   // call I O to connect to these server right
 //So we already had socket on the server when the new connection comes in on the client.
 //When we initialize the connection we now also get access to socket.
 //And this socket is going to allow us to send events and receive events from both the server and the client
-
+const data = []
+const videos = ["kJQP7kiw5Fk","YCvAGO53wiQ","vt6fkq3Fxkg","wKuP5Hz30ws","XwNCyPF1nOE","J9svlv6_-eg"]
 //elements
 
 const $messageForm = document.querySelector('#message-form')
@@ -10,6 +11,7 @@ const $messageFormButton = document.querySelector('button')
 const $messageFormInput = document.querySelector('input')
 const $sendLocationButton = document.querySelector('#location-nav')
 const $messages = document.querySelector('#messages')
+const $musicNav = document.querySelector('#music-nav') 
 //templates
 
 const messageTemplate = document.querySelector('#message-template').innerHTML
@@ -47,13 +49,32 @@ const autoScroll = () => {
     }
 }
 
-// socket.on('notices',(message) => {
-//     const html = Mustache.render(notificationTemplate,{
-//         message:message.text,
-//         createdAt:moment(message.createdAt).format("hh:mm:ss a")
-//     })
-//     document.querySelector('#noticeList').innerHTML = html
-// })
+socket.on('notices',(message) => {
+    data.push(message.text)
+    const len= data.length
+    if(len===4){
+        document.getElementById("noticeList").innerHTML = (
+            `<a href = "#">`+data[len-0]+`</a>`
+            + `<a href = "#">`+data[len-1]+`</a>`
+            + `<a href = "#">`+data[len-2]+`</a>`
+            +`<a href = "#">`+data[len-3]+`</a>`)
+    }
+    if(len===3){
+    document.getElementById("noticeList").innerHTML = (
+        `<a href = "#">`+data[len-1]+`</a>`
+        + `<a href = "#">`+data[len-2]+`</a>`
+        +`<a href = "#">`+data[len-3]+`</a>`)
+    }
+    if(len==2){
+        document.getElementById("noticeList").innerHTML = (
+            `<a href = "#">`+data[len-1]+`</a>`
+            + `<a href = "#">`+data[len-2]+`</a>`)
+    }
+    if(len==1){
+        document.getElementById("noticeList").innerHTML = (
+            `<a href = "#">`+data[len-1]+`</a>`)
+    }
+})
 
 socket.on('message',(message) => {  //this message in arg is actually an object getting value in messages.js
     //to render msg
@@ -106,6 +127,11 @@ $messageForm.addEventListener('submit',(e) => {
         }
         console.log('Message deliverd!')
     })
+})
+
+$musicNav.addEventListener('click',() => {
+    const num = Math.floor(Math.random()*6)
+    document.getElementById("embed-videos").innerHTML= (`<iframe width="460" height="215" src="https://www.youtube.com/embed/`+videos[num]+`" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`)
 })
 
 $sendLocationButton.addEventListener('click',() => {

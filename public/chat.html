@@ -17,19 +17,22 @@
             <div class="chat__main">         
 
                     <ul id="navbar_ul">
-                            <li class="bar" id="location-nav"><a id="loc" target="_blank">Location</a></li>
-                            <li class="bar" id="weather-nav"><a href="" target="_blank">Weather</a></li>
+                            <li class="bar" id="location-nav"><a target="_blank">Location</a></li>
+                            <!-- <li class="bar" id="weather-nav"><a href="" target="_blank">Weather</a></li> -->
                             <li class="bar" id="picture-nav"><a href="" target="_blank">Pictures</a></li>
                             <li class="bar" id="payment-nav"><a href="https://paytm.com/" target="_blank">Payment</a></li>
                             <li class="bar" id="topic-nav"><a href="https://www.business-standard.com/latest-news" target="_blank">Topics</a></li> 
-                            <li class="bar" id="music-nav"><a href="" target="_blank">Musics</a></li>
-                            
+                            <li class="bar" id="music-nav"><a>Latest Videos</a></li>
+                            <!-- <li class="dropdown bar">
+                                <a href="javascript:void(0)" class="dropbtn">Latest Videos</a>
+                                <div class="dropdown-content" id="embedOption">
+                                  
+                                </div>
+                            </li> -->
                             <li class="dropdown bar">
                                 <a href="javascript:void(0)" class="dropbtn">Notifications</a>
-                                <div class="dropdown-content" id="notice_list">
-                                  <a href="#">Link 1</a>
-                                  <a href="#">Link 2</a>
-                                  <a href="#">Link 3</a>
+                                <div class="dropdown-content" id="noticeList">
+                                  
                                 </div>
                             </li> 
                             <!-- <li class="bar" id="notification-nav"><a href="" target="_blank">Notifications</a></li> -->
@@ -37,10 +40,12 @@
                     <div>
                             <h1 id = "title">Chat App</h1>
                     </div>
-
+                    <div id ="embed-videos">
+                            
+                    </div>
 
                     <div id="messages" class="chat__messages">
-
+                        
                     </div>  <!--messages will be shown here i.e the container-->
 
                     <div class="compose">

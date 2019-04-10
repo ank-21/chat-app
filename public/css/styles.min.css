@@ -7,7 +7,8 @@ html{
     font-size:16px
 }
 input{
-    font-size:14px}
+    font-size:14px
+}
     body{
         line-height:1.4;
         color:#333;
@@ -105,21 +106,15 @@ input{
         flex-direction:column;
         max-height:100vh
     }
-    #loc{
-        cursor: pointer;
-        color: white;
-    }
-    #loc :hover{
-        text-decoration: underline;
-        background-color: #111;
-        color: #9900CC;
-    }
     #navbar_ul{
             list-style-type: none;
-            margin: 0;
+            margin-bottom: 5px;
             padding: 0;
             background-color: #563D7C;
-            width: 100%;       
+            width: 100%;
+            display:none;
+            font-size: 18px;
+            font-weight: 460;       
     }
     .bar {
         float: left;
@@ -132,6 +127,24 @@ input{
         padding: 14px 16px;
         text-decoration: none;
     }
+    #location-nav{
+        color: white;
+    }
+    #location-nav:hover{
+        cursor: pointer;
+        text-decoration: underline;
+        background-color:#563D7C;
+        color:#0070CC;
+  }
+  #music-nav{
+    color: white;
+}
+#music-nav:hover{
+    cursor: pointer;
+    text-decoration: underline;
+    background-color:#563D7C;
+    color:#0070CC;
+}
     .dropbtn {
         display: inline-block;
         color: white;
@@ -165,6 +178,7 @@ input{
       .dropdown:hover .dropdown-content {
         display: block;
       }
+      
       
     /* .bar a:hover {
         background-color: #111;

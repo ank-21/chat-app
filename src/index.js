@@ -45,7 +45,7 @@ io.on('connection', (socket) => {
         socket.broadcast.to(user.room).emit('message', generateMessage('Admin',`${user.username} has joined!`))      //to emit it to all except tht particular connection
         //change
 
-        // socket.broadcast.to(user.room).emit('notices',generateMessage('Admin',`${user.username} has joined!`))
+         socket.broadcast.to(user.room).emit('notices',generateMessage('Admin',`${user.username} has joined!`))
         io.to(user.room).emit('roomData', {
             room:user.room,
             users:getUsersInRoom(user.room)
@@ -73,7 +73,7 @@ io.on('connection', (socket) => {
 
         if(user){
             io.to(user.room).emit('message',generateMessage('Admin',`${user.username} has left the chat!`))
-            // io.to(user.room).emit('notices',generateMessage('Admin',`${user.username} has left the chat!`))
+            io.to(user.room).emit('notices',generateMessage('Admin',`${user.username} has left the chat!`))
             io.to(user.room).emit('roomData',{
                 room: user.room,
                 users: getUsersInRoom(user.room)
