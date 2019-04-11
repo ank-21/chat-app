@@ -3,7 +3,9 @@ const socket = io()   // call I O to connect to these server right
 //When we initialize the connection we now also get access to socket.
 //And this socket is going to allow us to send events and receive events from both the server and the client
 const data = []
-const videos = ["kJQP7kiw5Fk","YCvAGO53wiQ","vt6fkq3Fxkg","wKuP5Hz30ws","XwNCyPF1nOE","J9svlv6_-eg"]
+const videos = ["kJQP7kiw5Fk","YCvAGO53wiQ","vt6fkq3Fxkg","wKuP5Hz30ws","XwNCyPF1nOE","J9svlv6_-eg","hVCYwwFwGEE","iqKdEhx-dD4"]
+const lengthOfVideos= videos.length
+const flag = 0
 //elements
 
 const $messageForm = document.querySelector('#message-form')
@@ -12,6 +14,8 @@ const $messageFormInput = document.querySelector('input')
 const $sendLocationButton = document.querySelector('#location-nav')
 const $messages = document.querySelector('#messages')
 const $musicNav = document.querySelector('#music-nav') 
+const $playVideo = document.querySelector('#playVideo')
+const $removeVideo = document.querySelector('#removeVideo')
 //templates
 
 const messageTemplate = document.querySelector('#message-template').innerHTML
@@ -129,9 +133,16 @@ $messageForm.addEventListener('submit',(e) => {
     })
 })
 
-$musicNav.addEventListener('click',() => {
-    const num = Math.floor(Math.random()*6)
-    document.getElementById("embed-videos").innerHTML= (`<iframe width="460" height="215" src="https://www.youtube.com/embed/`+videos[num]+`" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`)
+
+
+$musicNav.addEventListener('mouseover',() => {
+    $playVideo.addEventListener('click',() => {
+        const num = Math.floor(Math.random()*lengthOfVideos)
+        document.getElementById("embed-videos").innerHTML= (`<iframe width="460" height="215" src="https://www.youtube.com/embed/`+videos[num]+`" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`)
+    }) 
+    $removeVideo.addEventListener('click',() => {
+        document.getElementById("embed-videos").innerHTML = " "
+    }) 
 })
 
 $sendLocationButton.addEventListener('click',() => {
@@ -156,7 +167,6 @@ $sendLocationButton.addEventListener('click',() => {
 socket.emit('join',{
     username,
     room
-    // sno:order()
 },(error)=>{
     if(error){
         alert(error)

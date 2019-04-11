@@ -178,6 +178,10 @@ input{
       .dropdown:hover .dropdown-content {
         display: block;
       }
+      .linkOfVideo{
+          cursor: pointer;
+          
+      }
       
       
     /* .bar a:hover {
